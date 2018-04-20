@@ -28,9 +28,19 @@ public class LoginController extends HttpServlet {
 		if(count>0)
 		{
 			Employee employee=repository.getEmployeeDetails(employeeEmail);
-			request.setAttribute("employee", employee);
-			RequestDispatcher requestDispatcher=request.getRequestDispatcher("/WEB-INF/views/mydata.jsp");
-			requestDispatcher.forward(request, response);
+			if(employee.getEmployeeRole().equals("hr"))
+			{	
+				request.setAttribute("employee", employee);
+				RequestDispatcher requestDispatcher=request.getRequestDispatcher("/WEB-INF/views/hr.jsp");
+				requestDispatcher.forward(request, response);
+			}
+			if(employee.getEmployeeRole().equals("employee"))
+			{	
+				request.setAttribute("employee", employee);
+				RequestDispatcher requestDispatcher=request.getRequestDispatcher("/WEB-INF/views/mydata.jsp");
+				requestDispatcher.forward(request, response);
+			}
+			
 		}
 		else
 		{

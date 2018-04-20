@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.niit.skillMap.model.Employee;
 import com.niit.skillMap.model.Repository;
@@ -17,6 +18,7 @@ public class UpdateController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session= request.getSession();
 		int employeeId=Integer.parseInt(request.getParameter("eid"));
 		String employeeName=request.getParameter("name");
 		String employeePhone=request.getParameter("phone");

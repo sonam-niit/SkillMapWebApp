@@ -1,7 +1,11 @@
 package com.niit.skillMap.model;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 public class Employee {
 
@@ -14,16 +18,15 @@ public class Employee {
 	private String employeeQualification;
 	private String employeeSkill;
 	private String employeeCertification;
+	private String employeeRole;
 	private boolean status;
 	
-	//private Date date_of_joining;
-	//private int no_of_student;
-	//private String placement_company;
 	
 	Validation validate;
-	
+	List<String> errorMap;
 	public Employee() {
 		validate=new Validation();
+		errorMap=new ArrayList<>();;
 	}
 
 	public int getEmployeeId() {
@@ -42,7 +45,7 @@ public class Employee {
 		if(validate.checkName(employeeName))
 			this.employeeName = employeeName;
 		else
-			validate.setMsg("Name should not be null");
+			errorMap.add("Name Cannot be left Blank");
 	}
 
 	public String getEmployeeEmail() {
@@ -50,7 +53,10 @@ public class Employee {
 	}
 
 	public void setEmployeeEmail(String employeeEmail) {
-		this.employeeEmail = employeeEmail;
+		if(validate.checkEmail(employeeEmail))
+			this.employeeEmail = employeeEmail;
+		else
+			errorMap.add("Invalid EmailId");
 	}
 
 	public String getEmployeePhone() {
@@ -58,7 +64,10 @@ public class Employee {
 	}
 
 	public void setEmployeePhone(String employeePhone) {
+		if(validate.checkPhone(employeePhone))
 		this.employeePhone = employeePhone;
+		else
+			errorMap.add("Phone Not Valid");
 	}
 
 	public String getEmployeeCity() {
@@ -66,7 +75,10 @@ public class Employee {
 	}
 
 	public void setEmployeeCity(String employeeCity) {
-		this.employeeCity = employeeCity;
+		if(validate.checkCity(employeeCity))
+			this.employeeCity = employeeCity;
+		else
+			errorMap.add("City can not be left blank");
 	}
 
 	public String getEmployeePassword() {
@@ -74,7 +86,10 @@ public class Employee {
 	}
 
 	public void setEmployeePassword(String employeePassword) {
+		if(validate.checkPassword(employeePassword))
 		this.employeePassword = employeePassword;
+		else
+			errorMap.add("password must conatin one lowercase, one uppercase,one special character and length>6 and length<=20");
 	}
 
 	public String getEmployeeQualification() {
@@ -116,7 +131,23 @@ public class Employee {
 		this.validate = validate;
 	}
 	
+	public List<String> getMap()
+	{
+		return errorMap;
+	}
+
+	public String getEmployeeRole() {
+		return employeeRole;
+	}
+
+	public void setEmployeeRole(String employeeRole) {
+		this.employeeRole = employeeRole;
+	}
 	
 	
+	
+	//private Date date_of_joining;
+	//private int no_of_student;
+	//private String placement_company;
 	
 }

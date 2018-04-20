@@ -5,7 +5,11 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
+
+import com.sun.crypto.provider.RSACipher;
 
 public class Repository {
 
@@ -20,7 +24,7 @@ public class Repository {
 	{
 		int count=0;
 		try {
-			pst = connection.prepareStatement("insert into employee(employeeId,employeeName,employeeEmail,employeePhone,employeeCity,employeeQualification,employeeSkill,employeeCertification,employeePassword,status) values(?,?,?,?,?,?,?,?,?,?)");
+			pst = connection.prepareStatement("insert into employee(employeeId,employeeName,employeeEmail,employeePhone,employeeCity,employeeQualification,employeeSkill,employeeCertification,employeePassword,employeeRole,status) values(?,?,?,?,?,?,?,?,?,?,?)");
 			pst.setInt(1, employee.getEmployeeId());
 			pst.setString(2, employee.getEmployeeName());
 			pst.setString(3, employee.getEmployeeEmail());
@@ -30,9 +34,11 @@ public class Repository {
 			pst.setString(7, employee.getEmployeeSkill());
 			pst.setString(8, employee.getEmployeeCertification());
 			pst.setString(9, employee.getEmployeePassword());
-			pst.setBoolean(10, employee.isStatus());
-			
+			pst.setString(10, employee.getEmployeeRole());
+			pst.setBoolean(11, employee.isStatus());
+			System.out.println("hello");
 			count=pst.executeUpdate();
+			System.out.println("world "+count);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -48,8 +54,8 @@ public class Repository {
 	{
 		int count=0;
 		try {
-			pst = connection.prepareStatement("update employee set employeeName=?,employeePhone=?,employeeEmail=?,employeeCity=?,employeeQualification=?,employeeSkill=?,employeeCertification=? where employeeId=?");
-			pst.setInt(8, employee.getEmployeeId());
+			pst = connection.prepareStatement("update employee set employeeName=?,employeePhone=?,employeeEmail=?,employeeCity=?,employeeQualification=?,employeeSkill=?,employeeCertification=?,employeeRole=? where employeeId=?");
+			pst.setInt(9, employee.getEmployeeId());
 			pst.setString(1, employee.getEmployeeName());
 			pst.setString(2, employee.getEmployeePhone());
 			pst.setString(3, employee.getEmployeeEmail());
@@ -57,6 +63,7 @@ public class Repository {
 			pst.setString(5, employee.getEmployeeQualification());
 			pst.setString(6, employee.getEmployeeSkill());
 			pst.setString(7, employee.getEmployeeCertification());
+			pst.setString(8, employee.getEmployeeRole());
 			
 			count=pst.executeUpdate();
 		} catch (SQLException e) {
@@ -97,13 +104,13 @@ public class Repository {
 			while(resultSet.next())
 			{
 				employee.setEmployeeId(resultSet.getInt(1));
-				employee.setEmployeeName(resultSet.getString(2));
 				employee.setEmployeeEmail(resultSet.getString(3));
 				employee.setEmployeePhone(resultSet.getString(4));
 				employee.setEmployeeCity(resultSet.getString(5));
 				employee.setEmployeeQualification(resultSet.getString(6));
 				employee.setEmployeeSkill(resultSet.getString(7));
 				employee.setEmployeeCertification(resultSet.getString(8));
+				employee.setEmployeeRole(resultSet.getString(10));
 
 				
 			}
@@ -134,7 +141,7 @@ public class Repository {
 				employee.setEmployeeQualification(resultSet.getString(6));
 				employee.setEmployeeSkill(resultSet.getString(7));
 				employee.setEmployeeCertification(resultSet.getString(8));
-
+				employee.setEmployeeRole(resultSet.getString(10));
 				
 			}
 		} catch (SQLException e) {
@@ -142,6 +149,36 @@ public class Repository {
 			e.printStackTrace();
 		}
 		return employee;
+		
+	}
+	
+	public List<Employee> getAllEmployeeDetails()
+	{
+		List<Employee> list=new ArrayList<>();
+		try {
+			pst = connection.prepareStatement("select * from employee");
+			ResultSet resultSet=pst.executeQuery();
+			while(resultSet.next())
+			{
+				Employee employee=new Employee();
+				employee.setEmployeeId(resultSet.getInt(1));
+				employee.setEmployeeName(resultSet.getString(2));
+				employee.setEmployeeEmail(resultSet.getString(3));
+				employee.setEmployeePhone(resultSet.getString(4));
+				employee.setEmployeeCity(resultSet.getString(5));
+				employee.setEmployeeQualification(resultSet.getString(6));
+				employee.setEmployeeSkill(resultSet.getString(7));
+				employee.setEmployeeCertification(resultSet.getString(8));
+				employee.setEmployeeRole(resultSet.getString(10));
+				employee.setStatus(resultSet.getBoolean(11));
+				list.add(employee);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
 		
 	}
 	
