@@ -7,9 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-<a href="profile?employee=${ requestScope.employee}">Profile</a>
-<a href="employee/employeeList">All Employee List</a>
-
+<a href="profile?employeeId=${ requestScope.employee.employeeId}">Profile</a>
+<a href="viewAll">All Employee List</a>
+<a href="approvalPending">Pending Approval</a>
 </tr>
 </body>
 </html>

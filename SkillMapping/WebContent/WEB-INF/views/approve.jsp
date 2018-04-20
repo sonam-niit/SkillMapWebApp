@@ -14,7 +14,7 @@
 	<table border=1>
 	<tr><th>Id:</th> <th>Name:</th> <th>Email:</th> <th>Phone:</th><th>City:</th>
 	<th>Qualification:</th> <th>Skill Set:</th> <th>Certification:</th> <th>Pending Action:</th></tr>
-	 <c:forEach var="employee" items="${requestScope.employeeList}" varStatus="status">
+	 <c:forEach var="employee" items="${requestScope.employeeList}" >
 	<tr>
 		<td>${employee.employeeId}</td>
 		<td>${employee.employeeName}</td>
@@ -24,7 +24,7 @@
 		<td>${employee.employeeQualification}</td>
 		<td>${employee.employeeSkill}</td>
 		<td>${employee.employeeCertification}</td>
-		<td><a href="delete?employeeId=${employee.employeeId}">Delete</a></td>
+		<td><a href="approve?employeeId=${employee.employeeId}">Approve</a></td>
 	</c:forEach>
 	</table>
 </body>

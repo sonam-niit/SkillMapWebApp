@@ -86,10 +86,10 @@ public class Employee {
 	}
 
 	public void setEmployeePassword(String employeePassword) {
-		if(validate.checkPassword(employeePassword))
-		this.employeePassword = employeePassword;
-		else
-			errorMap.add("password must conatin one lowercase, one uppercase,one special character and length>6 and length<=20");
+		//if(validate.checkPassword(employeePassword))
+			this.employeePassword = employeePassword;
+		//else
+			//errorMap.add("password must contain Minimum eight characters, at least one uppercase letter, one lowercase letter and one number:");
 	}
 
 	public String getEmployeeQualification() {

@@ -36,9 +36,7 @@ public class Repository {
 			pst.setString(9, employee.getEmployeePassword());
 			pst.setString(10, employee.getEmployeeRole());
 			pst.setBoolean(11, employee.isStatus());
-			System.out.println("hello");
 			count=pst.executeUpdate();
-			System.out.println("world "+count);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -75,12 +73,30 @@ public class Repository {
 		
 		return count;
 	}
+	public int approveEmployee(int id)
+	{
+		int count=0;
+		try {
+			pst = connection.prepareStatement("update employee set status=? where employeeId=?");
+			pst.setBoolean(1, true);
+			pst.setInt(2, id);
+			
+			count=pst.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		return count;
+	}
 	
 	public int deleteEmployee(int id)
 	{
 		int count=0;
 		try {
-			pst = connection.prepareStatement("delete from employee where id=?");
+			pst = connection.prepareStatement("delete from employee where employeeId=?");
 			pst.setInt(1,id);
 			
 			count=pst.executeUpdate();
@@ -156,7 +172,8 @@ public class Repository {
 	{
 		List<Employee> list=new ArrayList<>();
 		try {
-			pst = connection.prepareStatement("select * from employee");
+			pst = connection.prepareStatement("select * from employee where status=?");
+			pst.setBoolean(1, true);
 			ResultSet resultSet=pst.executeQuery();
 			while(resultSet.next())
 			{
@@ -181,6 +198,70 @@ public class Repository {
 		return list;
 		
 	}
+	
+	public List<Employee> getAllApprovedEmployee(String key)
+	{
+		List<Employee> list=new ArrayList<>();
+		try {
+			pst = connection.prepareStatement("select * from employee where employeeSkill like ? and status=? ");
+			pst.setString(1, "%"+key+"%");
+			pst.setBoolean(2, true);
+			ResultSet resultSet=pst.executeQuery();
+			while(resultSet.next())
+			{
+				Employee employee=new Employee();
+				employee.setEmployeeId(resultSet.getInt(1));
+				employee.setEmployeeName(resultSet.getString(2));
+				employee.setEmployeeEmail(resultSet.getString(3));
+				employee.setEmployeePhone(resultSet.getString(4));
+				employee.setEmployeeCity(resultSet.getString(5));
+				employee.setEmployeeQualification(resultSet.getString(6));
+				employee.setEmployeeSkill(resultSet.getString(7));
+				employee.setEmployeeCertification(resultSet.getString(8));
+				employee.setEmployeeRole(resultSet.getString(10));
+				employee.setStatus(resultSet.getBoolean(11));
+				list.add(employee);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+		
+	}
+	
+	public List<Employee> getAllPendingDetails()
+	{
+		List<Employee> list=new ArrayList<>();
+		try {
+			pst = connection.prepareStatement("select * from employee where status=?");
+			pst.setBoolean(1, false);
+			ResultSet resultSet=pst.executeQuery();
+			while(resultSet.next())
+			{
+				Employee employee=new Employee();
+				employee.setEmployeeId(resultSet.getInt(1));
+				employee.setEmployeeName(resultSet.getString(2));
+				employee.setEmployeeEmail(resultSet.getString(3));
+				employee.setEmployeePhone(resultSet.getString(4));
+				employee.setEmployeeCity(resultSet.getString(5));
+				employee.setEmployeeQualification(resultSet.getString(6));
+				employee.setEmployeeSkill(resultSet.getString(7));
+				employee.setEmployeeCertification(resultSet.getString(8));
+				employee.setEmployeeRole(resultSet.getString(10));
+				employee.setStatus(resultSet.getBoolean(11));
+				list.add(employee);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+		
+	}
+	
 	
 	public int validateEmployee(String employeeEmail,String employeePassword)
 	{

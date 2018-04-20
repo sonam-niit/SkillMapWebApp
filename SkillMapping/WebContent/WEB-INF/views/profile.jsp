@@ -16,7 +16,7 @@
 	<div class="row">
 		<h2>Welcome ${requestScope.employee.employeeName}</h2> 
         
-        <form class="form-horizontal" method="get" action="updateProfile">
+        <form class="form-horizontal" method="post" action="updateProfile">
 <fieldset>
 
 <!-- Form Name -->

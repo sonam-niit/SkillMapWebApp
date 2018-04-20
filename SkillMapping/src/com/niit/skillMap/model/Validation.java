@@ -17,7 +17,7 @@ public class Validation {
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 	private static final String PHONE_PATTERN = "^[0-9]{10}$";
 	
-	private static final String PASSWORD_PATTERN = "((?=.*/d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
+	private static final String PASSWORD_PATTERN = "^(?=.*\\d)(?=.*[a-zA-Z]).{6,20}$";
 	private Pattern pattern;
 	private Matcher matcher;
 	

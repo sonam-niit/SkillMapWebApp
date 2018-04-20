@@ -20,7 +20,7 @@
 <fieldset>
 
 <!-- Form Name -->
-<legend>Login Here</legend>
+<legend>${requestScope.message }</legend>
 
 <div class="form-group">
   <label class="col-md-4 control-label" for="email">Email:</label>  
@@ -51,7 +51,7 @@
 </form>
   
 	</div>
-	<a href="register">Create Account</a>
+	<a href="registerPage">Create Account</a>
 </div>
 </body>
 </html>
