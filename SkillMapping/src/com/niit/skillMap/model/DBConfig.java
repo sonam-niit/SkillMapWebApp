@@ -1,5 +1,7 @@
 package com.niit.skillMap.model;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,22 +15,26 @@ public class DBConfig {
 		String url;
 		String user;
 		String password;
-		Properties prop = new Properties();
+		//Properties prop = new Properties();
 		InputStream input = null;
 		Connection connection=null;
 		try {
+			String propFileName = "D:\\JavaWorkSpace\\SkillMapping\\src\\utility.properties";
+			File file = new File(propFileName);
+			FileInputStream fileInput = new FileInputStream(file);
+			Properties prop = new Properties();
+			prop.load(fileInput);
+			fileInput.close();
 
-			//input = ClassLoader.getSystemResourceAsStream("utility.properties");
-			//prop.load(input);
-			/*driver=prop.getProperty("driver");
+			driver=prop.getProperty("driver");
 			url=prop.getProperty("url");
 			user=prop.getProperty("user");
-			password=prop.getProperty("password");*/
+			password=prop.getProperty("password");
+			System.out.println(driver+" "+url+" ");
+			Class.forName(driver);
+			connection=DriverManager.getConnection(url,user,password);
 			
-			Class.forName("org.h2.Driver");
-			connection=DriverManager.getConnection("jdbc:h2:tcp://localhost/~/NIITProject","sa","password");
-			
-			/*if(connection!= null)
+		/*	if(connection!= null)
 				System.out.println("Connected");*/
 
 		} 
